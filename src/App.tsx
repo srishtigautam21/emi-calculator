@@ -1,16 +1,28 @@
 import "./App.css";
 import React, { useState } from "react";
 import DownPaymentAndLoan from "./component/DownPaymentAndLoan.tsx";
+import { tenureData } from "./utils/contants.ts";
 
 function App() {
-  const [cost, setCost] = useState(0);
+  const [cost, setCost] = useState<number>(0);
   const [interest, setInterest] = useState(0);
   const [fee, setFee] = useState(1);
   const [downPayment, setDownPayment] = useState(0);
   const [tenure, setTenure] = useState(12);
-  const [emi, setEmi] = useState(0);
+  const [emi, setEmi] = useState<any | number>(0);
 
-  const CalculateEMI = () => {};
+  const CalculateEMI = (downPayment: number) => {
+    // const EMIamount = P * R* (1-R)^N/(1-R)^(N-1);
+    if (!cost) return;
+    const loanAmt = cost - downPayment;
+    const rateOfInterest = interest / 100;
+    const numberOfYears = tenure / 12;
+    const EMI =
+      (loanAmt * rateOfInterest * (1 + rateOfInterest) ** numberOfYears) /
+        (1 + rateOfInterest) ** numberOfYears -
+      1;
+    return Number(EMI / 12).toFixed(0);
+  };
 
   const UpdateEMI = (event: any) => {
     if (!cost) {
@@ -18,6 +30,8 @@ function App() {
     }
     const Dp = Number(event.target.value);
     setDownPayment(Dp);
+    const emiNum = CalculateEMI(Dp);
+    setEmi(emiNum);
   };
 
   const updateDownPayment = (e: any) => {
@@ -66,6 +80,19 @@ function App() {
         CalculateEMI={CalculateEMI}
         updateDownPayment={updateDownPayment}
       />
+      <div className='tenureContainer'>
+        <span className='header'>Tenure</span>
+        {tenureData.map((value) => {
+          return (
+            <button
+              className={`tenure ${value === tenure ? "selected" : ""}`}
+              onClick={() => setTenure(value)}
+            >
+              {value}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

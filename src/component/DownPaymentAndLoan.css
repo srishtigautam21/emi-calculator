@@ -3,3 +3,14 @@
   flex-direction: column;
   row-gap: 20px;
 }
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  gap: 10px;
+}
+.labels {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}

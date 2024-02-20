@@ -12,14 +12,21 @@ const DownPaymentAndLoan = ({
   return (
     <div className='inner-wrapper'>
       <p className='header'>Down Payment</p>
-      <div>Total down payment - Rs. 1234</div>
-      <input
-        type='range'
-        min='0'
-        max={cost}
-        value={downPayment}
-        onChange={(e) => UpdateEMI(e)}
-      />
+      <div className='input-wrapper'>
+        {/* <div>Total down payment - Rs. 1234</div> */}
+        <input
+          type='range'
+          min='0'
+          max={cost}
+          value={downPayment}
+          onChange={(e) => UpdateEMI(e)}
+        />
+        <div className='labels'>
+          <label>{"0%"}</label>
+          <label>{"100%"}</label>
+        </div>
+        {/* <b>{downPayment}</b> */}
+      </div>
       <p className='header'>Loan Per month</p>
       {/* <div>Total down payment - Rs. 1234</div> */}
       <div>

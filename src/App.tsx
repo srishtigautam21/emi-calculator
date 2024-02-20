@@ -1,9 +1,33 @@
 import "./App.css";
 import React, { useState } from "react";
-import DownPayment from "./component/DownPayment.tsx";
+import DownPaymentAndLoan from "./component/DownPaymentAndLoan.tsx";
 
 function App() {
   const [cost, setCost] = useState(0);
+  const [interest, setInterest] = useState(0);
+  const [fee, setFee] = useState(1);
+  const [downPayment, setDownPayment] = useState(0);
+  const [tenure, setTenure] = useState(12);
+  const [emi, setEmi] = useState(0);
+
+  const CalculateEMI = () => {};
+
+  const UpdateEMI = (event: any) => {
+    if (!cost) {
+      return;
+    }
+    const Dp = Number(event.target.value);
+    setDownPayment(Dp);
+  };
+
+  const updateDownPayment = (e: any) => {
+    if (!cost) {
+      return;
+    }
+    const emi = Number(e.target.value);
+    setEmi(emi);
+  };
+
   return (
     <div className='wrapper'>
       <div className='header'>EMI Calculator</div>
@@ -34,7 +58,14 @@ function App() {
           className='input'
         ></input>
       </label>
-      <DownPayment />
+      <DownPaymentAndLoan
+        cost={cost}
+        downPayment={downPayment}
+        UpdateEMI={UpdateEMI}
+        emi={emi}
+        CalculateEMI={CalculateEMI}
+        updateDownPayment={updateDownPayment}
+      />
     </div>
   );
 }

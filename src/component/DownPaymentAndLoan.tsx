@@ -9,6 +9,7 @@ const DownPaymentAndLoan = ({
   CalculateEMI,
   updateDownPayment,
 }) => {
+  // console.log(downPayment);
   return (
     <div className='inner-wrapper'>
       <p className='header'>Down Payment</p>
@@ -23,13 +24,14 @@ const DownPaymentAndLoan = ({
         />
         <div className='labels'>
           <label>{"0%"}</label>
+          <b>{downPayment}</b>
           <label>{"100%"}</label>
         </div>
         {/* <b>{downPayment}</b> */}
       </div>
       <p className='header'>Loan Per month</p>
       {/* <div>Total down payment - Rs. 1234</div> */}
-      <div>
+      <div className='input-wrapper'>
         <input
           type='range'
           min={CalculateEMI(cost)}

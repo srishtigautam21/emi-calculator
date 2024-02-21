@@ -7,7 +7,7 @@ function App() {
   const [cost, setCost] = useState<number>(0);
   const [interest, setInterest] = useState(0);
   const [fee, setFee] = useState(1);
-  const [downPayment, setDownPayment] = useState(0);
+  const [downPayment, setDownPayment] = useState<any | number>(0);
   const [tenure, setTenure] = useState(12);
   const [emi, setEmi] = useState<any | number>(0);
 
@@ -34,12 +34,16 @@ function App() {
     setEmi(emiNum);
   };
 
+  const calculateDownPayment = () => {};
+
   const updateDownPayment = (e: any) => {
     if (!cost) {
       return;
     }
     const emi = Number(e.target.value);
-    setEmi(emi);
+    setEmi(emi.toFixed(0));
+    const dp = CalculateEMI(emi);
+    setDownPayment(dp);
   };
 
   return (

@@ -20,7 +20,8 @@ const DownPaymentAndLoan = ({
           min='0'
           max={cost}
           value={downPayment}
-          onChange={(e) => UpdateEMI(e)}
+          onChange={UpdateEMI}
+          defaultValue={0}
         />
         <div className='labels'>
           <label>{"0%"}</label>

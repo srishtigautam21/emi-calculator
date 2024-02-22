@@ -1,15 +1,20 @@
 import React from "react";
 import "./DownPaymentAndLoan.css";
 
-const DownPaymentAndLoan = ({
-  cost,
-  downPayment,
-  UpdateEMI,
-  emi,
-  CalculateEMI,
-  updateDownPayment,
-}) => {
+interface EmiProps {
+  cost: number;
+  downPayment: any;
+  UpdateEMI: any;
+  emi: number;
+  CalculateEMI: any;
+  updateDownPayment: any;
+}
+
+const DownPaymentAndLoan = (EmiProps: EmiProps) => {
   // console.log(downPayment);
+
+  const { cost, downPayment, UpdateEMI, CalculateEMI, updateDownPayment, emi } =
+    EmiProps;
   return (
     <div className='inner-wrapper'>
       <p className='header'>Down Payment</p>
@@ -17,12 +22,11 @@ const DownPaymentAndLoan = ({
         {/* <div>Total down payment - Rs. 1234</div> */}
         <input
           type='range'
-          min='0'
+          onChange={(e) => UpdateEMI(e)}
+          min={0}
           max={cost}
           value={downPayment}
-          onChange={UpdateEMI}
-          defaultValue={0}
-        />
+        ></input>
         <div className='labels'>
           <label>{"0%"}</label>
           <b>{downPayment}</b>

@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useState } from "react";
-import DownPaymentAndLoan from "./component/DownPaymentAndLoan.tsx";
-import { tenureData } from "./utils/contants.ts";
+import DownPaymentAndLoan from "./component/DownPaymentAndLoan";
+import { tenureData } from "./utils/contants";
 
 function App() {
   const [cost, setCost] = useState<number>(0);
@@ -25,6 +25,7 @@ function App() {
   };
 
   const UpdateEMI = (event: any) => {
+    console.log("in update emi", event.target.value);
     if (!cost) {
       return;
     }
@@ -45,6 +46,9 @@ function App() {
     const dp = CalculateEMI(emi);
     setDownPayment(dp);
   };
+  const handleAssetInput = () => {};
+  const handleInterestRate = () => {};
+  const handleProcessingFee = () => {};
 
   return (
     <div className='wrapper'>
@@ -56,6 +60,8 @@ function App() {
           value={cost}
           placeholder='Enter your asset value'
           className='input'
+          onChange={handleAssetInput}
+          autoComplete='hello'
         ></input>
       </label>
       <label className='inputWrapper'>
@@ -65,6 +71,7 @@ function App() {
           value={cost}
           placeholder='Enter interest rate'
           className='input'
+          onChange={handleInterestRate}
         ></input>
       </label>
       <label className='inputWrapper'>
@@ -74,6 +81,7 @@ function App() {
           value={cost}
           placeholder='Processing fee'
           className='input'
+          onChange={handleProcessingFee}
         ></input>
       </label>
       <DownPaymentAndLoan
@@ -89,6 +97,7 @@ function App() {
         {tenureData.map((value) => {
           return (
             <button
+              key={value}
               className={`tenure ${value === tenure ? "selected" : ""}`}
               onClick={() => setTenure(value)}
             >

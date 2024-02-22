@@ -11,10 +11,10 @@ function App() {
   const [tenure, setTenure] = useState(12);
   const [emi, setEmi] = useState<any | number>(0);
 
-  const CalculateEMI = (downPayment: number) => {
+  const calculateEMI = (downPay: any) => {
     // const EMIamount = P * R* (1-R)^N/(1-R)^(N-1);
     if (!cost) return;
-    const loanAmt = cost - downPayment;
+    const loanAmt = cost - Number(downPay);
     const rateOfInterest = interest / 100;
     const numberOfYears = tenure / 12;
     const EMI =
@@ -24,14 +24,16 @@ function App() {
     return Number(EMI / 12).toFixed(0);
   };
 
-  const UpdateEMI = (event: any) => {
+  const updateEMI = (event: any) => {
     console.log("in update emi", event.target.value);
-    if (!cost) {
-      return;
-    }
-    const Dp = Number(event.target.value);
-    setDownPayment(Dp);
-    const emiNum = CalculateEMI(Dp);
+    // if (!cost) {
+    //   return;
+    // }
+    // const Dp = Number(event.target.value);
+    // setDownPayment(Dp);
+    setDownPayment(Number(event.target.value));
+    // const emiNum = calculateEMI(Dp);
+    const emiNum = calculateEMI(Number(event.target.value));
     setEmi(emiNum);
   };
 
@@ -43,7 +45,7 @@ function App() {
     }
     const emi = Number(e.target.value);
     setEmi(emi.toFixed(0));
-    const dp = CalculateEMI(emi);
+    const dp = calculateEMI(emi);
     setDownPayment(dp);
   };
   const handleAssetInput = () => {};
@@ -87,9 +89,9 @@ function App() {
       <DownPaymentAndLoan
         cost={cost}
         downPayment={downPayment}
-        UpdateEMI={UpdateEMI}
+        updateEMI={updateEMI}
         emi={emi}
-        CalculateEMI={CalculateEMI}
+        calculateEMI={calculateEMI}
         updateDownPayment={updateDownPayment}
       />
       <div className='tenureContainer'>

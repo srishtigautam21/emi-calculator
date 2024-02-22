@@ -4,16 +4,14 @@ import "./DownPaymentAndLoan.css";
 interface EmiProps {
   cost: number;
   downPayment: any;
-  UpdateEMI: any;
+  updateEMI: (e: React.ChangeEvent<HTMLInputElement>) => void;
   emi: number;
-  CalculateEMI: any;
-  updateDownPayment: any;
+  calculateEMI: any;
+  updateDownPayment: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const DownPaymentAndLoan = (EmiProps: EmiProps) => {
-  // console.log(downPayment);
-
-  const { cost, downPayment, UpdateEMI, CalculateEMI, updateDownPayment, emi } =
+  const { cost, downPayment, updateEMI, calculateEMI, updateDownPayment, emi } =
     EmiProps;
   return (
     <div className='inner-wrapper'>
@@ -22,9 +20,9 @@ const DownPaymentAndLoan = (EmiProps: EmiProps) => {
         {/* <div>Total down payment - Rs. 1234</div> */}
         <input
           type='range'
-          onChange={(e) => UpdateEMI(e)}
+          onChange={(e) => updateEMI(e)}
           min={0}
-          max={cost}
+          max={100}
           value={downPayment}
         ></input>
         <div className='labels'>
@@ -32,22 +30,21 @@ const DownPaymentAndLoan = (EmiProps: EmiProps) => {
           <b>{downPayment}</b>
           <label>{"100%"}</label>
         </div>
-        {/* <b>{downPayment}</b> */}
       </div>
       <p className='header'>Loan Per month</p>
-      {/* <div>Total down payment - Rs. 1234</div> */}
+
       <div className='input-wrapper'>
         <input
           type='range'
-          min={CalculateEMI(cost)}
-          max={CalculateEMI(0)}
+          min={calculateEMI(cost)}
+          max={calculateEMI(0)}
           value={emi}
-          onChange={() => updateDownPayment()}
+          onChange={(e) => updateDownPayment(e)}
         />
         <div className='labels'>
-          <label>{CalculateEMI(cost)}</label>
+          <label>{calculateEMI(cost)}</label>
           <b>{downPayment}</b>
-          <label>{CalculateEMI(0)}</label>
+          <label>{calculateEMI(0)}</label>
         </div>
       </div>
     </div>

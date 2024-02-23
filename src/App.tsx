@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DownPaymentAndLoan from "./component/DownPaymentAndLoan";
 import { tenureData } from "./utils/contants";
 
@@ -37,7 +37,11 @@ function App() {
     setEmi(emiNum);
   };
 
-  const calculateDownPayment = () => {};
+  const calculateDownPayment = (emi: number) => {
+    if (!cost) return;
+    const downPaymentPercent = 100 - (emi / Number(calculateEMI(0))) * 100;
+    return Number((downPaymentPercent / 100) * cost).toFixed(0);
+  };
 
   const updateDownPayment = (e: any) => {
     if (!cost) {
@@ -48,8 +52,16 @@ function App() {
     const dp = calculateEMI(emi);
     setDownPayment(dp);
   };
-  const handleAssetInput = () => {};
-  const handleInterestRate = () => {};
+
+  useEffect(() => {
+    if (!(cost > 0)) {
+      setDownPayment(0);
+      setEmi(0);
+    }
+    const emiNum = calculateEMI(Number(downPayment));
+    setEmi(emiNum);
+  }, [tenure]);
+
   const handleProcessingFee = () => {};
 
   return (
@@ -62,32 +74,33 @@ function App() {
           value={cost}
           placeholder='Enter your asset value'
           className='input'
-          onChange={handleAssetInput}
-          autoComplete='hello'
+          onChange={(e) => setCost(Number(e.target.value))}
         ></input>
       </label>
       <label className='inputWrapper'>
         <p className='title'>Interest Rate (in %)</p>
         <input
           type='number'
-          value={cost}
+          value={interest}
           placeholder='Enter interest rate'
           className='input'
-          onChange={handleInterestRate}
+          onChange={(e) => setInterest(Number(e.target.value))}
         ></input>
       </label>
       <label className='inputWrapper'>
         <p className='title'>Processing Fee (in %)</p>
         <input
           type='number'
-          value={cost}
+          value={fee}
           placeholder='Processing fee'
           className='input'
-          onChange={handleProcessingFee}
+          onChange={(e) => setFee(Number(e.target.value))}
         ></input>
       </label>
       <DownPaymentAndLoan
         cost={cost}
+        fee={fee}
+        tenure={tenure}
         downPayment={downPayment}
         updateEMI={updateEMI}
         emi={emi}

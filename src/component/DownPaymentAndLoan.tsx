@@ -24,15 +24,21 @@ const DownPaymentAndLoan = (EmiProps: EmiProps) => {
     fee,
     tenure,
   } = EmiProps;
+
+  const totalDownPayment = () => {
+    const Dp = Number(downPayment + (cost - downPayment) * (fee / 100));
+    const formattedDp = Number(Dp.toFixed(0));
+    return numberWithCommas(formattedDp);
+  };
+  const totalEmi = () => {
+    return numberWithCommas(Number((emi * tenure).toFixed(0)));
+  };
   return (
     <div className='inner-wrapper'>
       <p className='header'>Down Payment</p>
       <span className='header' style={{ textDecoration: "underline" }}>
         {" "}
-        Total DownPayment -{" "}
-        {numberWithCommas(
-          Number((downPayment + (cost - downPayment) * (fee / 100)).toFixed(0))
-        )}
+        Total DownPayment - {totalDownPayment()}
       </span>
       <div className='input-wrapper'>
         {/* <div>Total down payment - Rs. 1234</div> */}
@@ -52,8 +58,7 @@ const DownPaymentAndLoan = (EmiProps: EmiProps) => {
       <p className='header'>Loan Per month</p>
       <span className='header' style={{ textDecoration: "underline" }}>
         {" "}
-        Total Loan Amount -{" "}
-        {numberWithCommas(Number((emi * tenure).toFixed(0)))}
+        Total Loan Amount - {totalEmi()}
       </span>
       <div className='input-wrapper'>
         <input

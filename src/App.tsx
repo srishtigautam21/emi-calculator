@@ -5,7 +5,7 @@ import { tenureData } from "./utils/contants";
 
 function App() {
   const [cost, setCost] = useState<number>(0);
-  const [interest, setInterest] = useState(0);
+  const [interest, setInterest] = useState(10);
   const [fee, setFee] = useState(1);
   const [downPayment, setDownPayment] = useState<any | number>(0);
   const [tenure, setTenure] = useState(12);
@@ -24,33 +24,10 @@ function App() {
     return Number(EMI / 12).toFixed(0);
   };
 
-  const updateEMI = (event: any) => {
-    console.log("in update emi", event.target.value);
-    // if (!cost) {
-    //   return;
-    // }
-    // const Dp = Number(event.target.value);
-    // setDownPayment(Dp);
-    setDownPayment(Number(event.target.value));
-    // const emiNum = calculateEMI(Dp);
-    const emiNum = calculateEMI(Number(event.target.value));
-    setEmi(emiNum);
-  };
-
   const calculateDownPayment = (emi: number) => {
     if (!cost) return;
     const downPaymentPercent = 100 - (emi / Number(calculateEMI(0))) * 100;
     return Number((downPaymentPercent / 100) * cost).toFixed(0);
-  };
-
-  const updateDownPayment = (e: any) => {
-    if (!cost) {
-      return;
-    }
-    const emi = Number(e.target.value);
-    setEmi(emi.toFixed(0));
-    const dp = calculateEMI(emi);
-    setDownPayment(dp);
   };
 
   useEffect(() => {
@@ -60,9 +37,30 @@ function App() {
     }
     const emiNum = calculateEMI(Number(downPayment));
     setEmi(emiNum);
-  }, [tenure]);
+  }, [tenure, cost]);
 
-  const handleProcessingFee = () => {};
+  const updateEMI = (event: any) => {
+    // console.log("in update emi", event.target.value);
+    // if (!cost) {
+    //   return;
+    // }
+    // const Dp = Number(event.target.value);
+    // setDownPayment(Dp);
+    setDownPayment(Number(event.target.value).toFixed(0));
+    // const emiNum = calculateEMI(Dp);
+    const emiNum = calculateEMI(Number(event.target.value));
+    setEmi(emiNum);
+  };
+
+  const updateDownPayment = (e: any) => {
+    if (!cost) {
+      return;
+    }
+    const emi = Number(e.target.value);
+    setEmi(emi.toFixed(0));
+    const dp = calculateDownPayment(emi);
+    setDownPayment(dp);
+  };
 
   return (
     <div className='wrapper'>
